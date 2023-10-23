@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "/"
 @model Silasi_Alexandru_Lab2.Pages.Books.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
+<h1>Books</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -24,12 +24,20 @@
             </th>
             <th>@Html.DisplayNameFor(model => model.Book[0].publishDate)</th>
             <th>@Html.DisplayNameFor(model => model.Book[0].Publisher.name)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+            </th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Book) {
-        <tr>
+            string selectedRow = "";
+            if (item.id == Model.BookID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.title)
             </td>
@@ -46,6 +54,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Publisher.name)
             </td>
+                <td>
+                    @{
+                        foreach (var category in item.BookCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.id">Details</a> |

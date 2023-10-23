@@ -26,5 +26,7 @@ namespace Silasi_Alexandru_Lab2.Models
 
         public int? publisherId { get; set; }
         public Publisher? Publisher { get; set; }
+
+        public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }
