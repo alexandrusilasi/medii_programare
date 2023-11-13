@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Silasi_Alexandru_Lab2.Data;
 using Silasi_Alexandru_Lab2.Models;
 
@@ -21,8 +22,16 @@ namespace Silasi_Alexandru_Lab2.Pages.Borrowings
 
         public IActionResult OnGet()
         {
-        ViewData["BookID"] = new SelectList(_context.Book, "id", "id");
-        ViewData["MemberID"] = new SelectList(_context.Member, "ID", "ID");
+            var bookList = _context.Book
+                 .Include(b => b.Author)
+                 .Select(x => new
+                 {
+                     x.AuthorID,
+                     BookFullName = x.title + " - " + x.Author.firstName + " " + x.Author.lastName
+                 });
+
+            ViewData["BookID"] = new SelectList(bookList, "id", "BookFullName");
+            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
             return Page();
         }
 
