@@ -41,18 +41,18 @@ namespace Silasi_Alexandru_Lab2.Pages.Books
             {
                 return NotFound();
             }
+            Book = book;
+
             PopulateAssignedCategoryData(_context, Book);
 
-            Book = book;
             ViewData["publisherId"] = new SelectList(_context.Set<Publisher>(), "id", "name");
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "AuthorID", "firstName");
+            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "AuthorID", "FullName");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int? id, string[]
-selectedCategories)
+        public async Task<IActionResult> OnPostAsync(int? id, string[]selectedCategories)
         {
             if (id == null)
             {
@@ -61,6 +61,7 @@ selectedCategories)
             //se va include Author conform cu sarcina de la lab 2
             var bookToUpdate = await _context.Book
             .Include(i => i.Publisher)
+            .Include(i => i.Author)
             .Include(i => i.BookCategories)
             .ThenInclude(i => i.Category)
             .FirstOrDefaultAsync(s => s.id == id);
@@ -72,7 +73,7 @@ selectedCategories)
             if (await TryUpdateModelAsync<Book>(
             bookToUpdate,
             "Book",
-            i => i.title, i => i.Author,
+            i => i.title, i => i.AuthorID,
             i => i.price, i => i.publishDate, i => i.publisherId))
             {
                 UpdateBookCategories(_context, selectedCategories, bookToUpdate);

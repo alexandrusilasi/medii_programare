@@ -12,5 +12,16 @@ namespace Silasi_Alexandru_Lab2.Models
 
         [Display(Name = "Last name")]
         public string lastName { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get
+            {
+                return firstName + " " + lastName;
+            }
+        }
+
+        public ICollection<Book>? Books { get; set; }
     }
 }

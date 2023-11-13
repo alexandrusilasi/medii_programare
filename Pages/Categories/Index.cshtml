@@ -21,11 +21,17 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Category) {
-        <tr>
+            string selectedRow = "";
+            if (item.ID == Model.CategoryID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
@@ -34,3 +40,33 @@
 }
     </tbody>
 </table>
+
+@if (Model.BooksInCategory != null && Model.BooksInCategory.Any())
+{
+    <h3>Books in Selected Category</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.BooksInCategory)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => book.Author.firstName) @Html.DisplayFor(modelItem => book.Author.lastName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
