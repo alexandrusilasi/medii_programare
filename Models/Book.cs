@@ -8,7 +8,8 @@ namespace Silasi_Alexandru_Lab2.Models
     {
         public int id { get; set; }
 
-        [Display(Name = "Title")]
+        [Display(Name = "Title")])]
+        [StringLength(150, MinimumLength = 3)]
         public string title { get; set; }
 
         [Display(Name = "Author")]
@@ -16,6 +17,7 @@ namespace Silasi_Alexandru_Lab2.Models
         public int? AuthorID { get; set; }
 
         [Column(TypeName = "decimal(6, 2)")]
+        [Range(0.01, 500)]
         [Display(Name = "Price")]
         public decimal price { get; set; }
 
