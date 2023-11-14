@@ -9,14 +9,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Silasi_Alexandru_Lab2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Silasi_Alexandru_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Silasi_Alexandru_Lab2Context' not found.")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<LibraryIdentityContext>();
-
 builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Silasi_Alexandru_Lab2Context") ?? throw new InvalidOperationException("Connectionstring 'Silasi_Alexandru_Lab2Context' not found.")));
 
-options.UseSqlServer(builder.Configuration.GetConnectionString("Silasi_Alexandru_Lab2Context") ?? throw new InvalidOperationException("Connectionstring 'Silasi_Alexandru_Lab2Context' not found.")));
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
  .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 var app = builder.Build();
@@ -33,7 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication();
 
 app.UseAuthorization();
 

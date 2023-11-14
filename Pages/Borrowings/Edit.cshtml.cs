@@ -36,8 +36,16 @@ namespace Silasi_Alexandru_Lab2.Pages.Borrowings
                 return NotFound();
             }
             Borrowing = borrowing;
-           ViewData["BookID"] = new SelectList(_context.Book, "id", "id");
-           ViewData["MemberID"] = new SelectList(_context.Member, "ID", "ID");
+            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
+
+            var bookList = _context.Book
+                .Include(b => b.Author)
+                .Select(x => new
+                {
+                    x.id,
+                    BookFullName = x.title + " - " + x.Author.lastName + " " + x.Author.firstName
+                });
+            ViewData["BookID"] = new SelectList(bookList, "id", "BookFullName");
             return Page();
         }
 

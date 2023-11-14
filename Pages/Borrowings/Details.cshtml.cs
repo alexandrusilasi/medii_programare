@@ -19,24 +19,25 @@ namespace Silasi_Alexandru_Lab2.Pages.Borrowings
             _context = context;
         }
 
-      public Borrowing Borrowing { get; set; } = default!; 
+      public Borrowing Borrowing { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Borrowing == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
-            if (borrowing == null)
+            Borrowing = await _context.Borrowing
+                .Include(b => b.Member)
+                .Include(b => b.Book)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (Borrowing == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Borrowing = borrowing;
-            }
+
             return Page();
         }
     }

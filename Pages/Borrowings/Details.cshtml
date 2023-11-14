@@ -11,23 +11,25 @@
     <h4>Borrowing</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowing.Member)
+        <dt>
+            @Html.DisplayNameFor(model => model.Borrowing.Member.FullName)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Borrowing.Member.ID)
+        <dd>
+            @Html.DisplayFor(model => model.Borrowing.Member.FullName)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowing.Book)
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Borrowing.Book.title)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Borrowing.Book.id)
+        <dd>
+            @Html.DisplayFor(model => model.Borrowing.Book.title)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowing.ReturnDate)
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Borrowing.Book.Author.FullName)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Borrowing.ReturnDate)
+        <dd>
+            @Html.DisplayFor(model => model.Borrowing.Book.Author.FullName)
         </dd>
     </dl>
 </div>

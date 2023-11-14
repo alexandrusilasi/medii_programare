@@ -22,16 +22,17 @@ namespace Silasi_Alexandru_Lab2.Pages.Borrowings
 
         public IActionResult OnGet()
         {
-            var bookList = _context.Book
-                 .Include(b => b.Author)
-                 .Select(x => new
-                 {
-                     x.AuthorID,
-                     BookFullName = x.title + " - " + x.Author.firstName + " " + x.Author.lastName
-                 });
-
-            ViewData["BookID"] = new SelectList(bookList, "id", "BookFullName");
             ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
+
+            var bookList = _context.Book
+                .Include(b => b.Author)
+                .Select(x => new
+                {
+                    x.id,
+                    BookFullName = x.title + " - " + x.Author.lastName + " " + x.Author.firstName
+                });
+            ViewData["BookID"] = new SelectList(bookList, "id", "BookFullName");
+
             return Page();
         }
 
